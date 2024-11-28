@@ -4,6 +4,8 @@ import Button from "../../common/Button";
 import { X } from "lucide-react";
 import { isDate } from "../../../utils";
 import { usePageTransition } from "../../../hooks/usePageTransition";
+import Label from "../../common/Label";
+import Text from "../../common/Text";
 
 const GoalCreate = () => {
   const { move } = usePageTransition();
@@ -24,7 +26,7 @@ const GoalCreate = () => {
     if (e.key === "Enter" && tagInput.trim()) {
       e.preventDefault();
       if (newGoal.tags.length >= 3) {
-        alert("태그는 최대 3개까지만 추가할 수 있습니다.");
+        alert("タグは最大３つまでです");
         return;
       }
       if (!newGoal.tags.includes(tagInput.trim())) {
@@ -47,27 +49,25 @@ const GoalCreate = () => {
   return (
     <Main>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">새로운 목표 등록</h1>
+        <h1 className="text-2xl font-bold">新しい目標</h1>
       </div>
 
       <form onSubmit={handleAddGoalOnClick} className="space-y-6">
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
-            목표
-          </label>
-          <input
+          <Label>目標</Label>
+          <Text
             type="text"
             value={newGoal.title}
             onChange={(e) => setNewGoal({ ...newGoal, title: e.target.value })}
             className="w-full p-2 border rounded"
-            placeholder="목표를 입력하세요"
+            placeholder="目標"
             required
           />
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            마감일
+            期限
           </label>
           <input
             type="date"
@@ -81,31 +81,27 @@ const GoalCreate = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
-            설명
-          </label>
+          <Label>説明</Label>
           <textarea
             value={newGoal.description}
             onChange={(e) =>
               setNewGoal({ ...newGoal, description: e.target.value })
             }
             className="w-full p-2 border rounded h-32"
-            placeholder="목표에 대한 상세 설명을 입력하세요"
+            placeholder="詳細"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
-            태그 (최대 3개)
-          </label>
+          <Label>タグ (最大 3個)</Label>
           <div className="space-y-2">
-            <input
+            <Text
               type="text"
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={addTag}
               className="w-full p-2 border rounded"
-              placeholder="태그를 입력하고 Enter를 누르세요"
+              placeholder="タグを入力してEnter"
               disabled={newGoal.tags.length >= 3}
             />
             <div className="flex flex-wrap gap-2">
@@ -115,13 +111,13 @@ const GoalCreate = () => {
                   className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded"
                 >
                   {tag}
-                  <button
+                  <Button
                     type="button"
                     onClick={() => removeTag(tag)}
                     className="hover:text-blue-900"
                   >
                     <X size={14} />
-                  </button>
+                  </Button>
                 </span>
               ))}
             </div>
@@ -134,13 +130,13 @@ const GoalCreate = () => {
             onClick={() => move("/goals")}
             className="px-4 py-2 border rounded hover:bg-gray-50"
           >
-            취소
+            キャンセル
           </Button>
           <Button
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            등록
+            登録
           </Button>
         </div>
       </form>

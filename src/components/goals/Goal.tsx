@@ -1,6 +1,5 @@
 import { Check, Trash2 } from "lucide-react";
 import Button from "../common/Button";
-import { useState } from "react";
 
 type GoalProps = {
   id: number;

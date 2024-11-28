@@ -1,10 +1,13 @@
 // src/pages/Login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
+import Button from "../../common/Button";
+import Text from "../../common/Text";
+import { usePageTransition } from "../../../hooks/usePageTransition";
+import Label from "../../common/Label";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { move } = usePageTransition();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +19,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      navigate("/goals");
+      move("/goals");
     } catch (error) {
       setError((error as Error).message);
     }
@@ -29,39 +32,35 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
+            <Label>Email</Label>
+            <Text
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full p-2 border rounded"
+              className="w-full p-2 border rounded"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
+            <Label>Password</Label>
+            <Text
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full p-2 border rounded"
+              className="w-full p-2 border rounded"
               required
             />
           </div>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
 
-          <button
+          <Button
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Login
-          </button>
+          </Button>
         </form>
       </div>
     </div>

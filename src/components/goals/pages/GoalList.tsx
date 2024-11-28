@@ -60,7 +60,7 @@ const GoalList = () => {
 
   return (
     <Main>
-      <Header title="目標's">
+      <Header title="Goals">
         <AddGoalButton onClick={() => move("/goals/create")} />
       </Header>
 

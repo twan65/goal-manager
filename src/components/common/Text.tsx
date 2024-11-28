@@ -2,16 +2,8 @@ import { ComponentProps } from "react";
 
 type TextProps = Omit<ComponentProps<"input">, "ref">;
 
-const Text = ({ type, value, onChange, required = false }: TextProps) => {
-  return (
-    <input
-      type={type}
-      value={value}
-      onChange={onChange}
-      className="w-full p-2 border rounded"
-      required={required}
-    />
-  );
+const Text = (props: TextProps) => {
+  return <input {...props} className="w-full p-2 border rounded" />;
 };
 
 export default Text;
