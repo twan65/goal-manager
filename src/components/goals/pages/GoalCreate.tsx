@@ -2,13 +2,17 @@ import { useState } from "react";
 import Main from "../../common/Main";
 import Button from "../../common/Button";
 import { X } from "lucide-react";
-import { isDate } from "../../../utils";
 import { usePageTransition } from "../../../hooks/usePageTransition";
 import Label from "../../common/Label";
 import Text from "../../common/Text";
+import { useAsync } from "../../../hooks/useAsync";
+import { api } from "../../../api";
+import { CreateGoalParams } from "../../../api/goals/goals";
 
 const GoalCreate = () => {
   const { move } = usePageTransition();
+  const { execute, loading } = useAsync();
+
   const [newGoal, setNewGoal] = useState({
     title: "",
     deadline: "",
@@ -17,9 +21,10 @@ const GoalCreate = () => {
   });
   const [tagInput, setTagInput] = useState("");
 
-  const handleAddGoalOnClick = () => {
-    isDate(newGoal.deadline);
-    // TODO: API 及び画面遷移
+  const handleAddGoalOnClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await execute(() => api.goals.create({ ...newGoal }));
+    move("/goals");
   };
 
   const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
