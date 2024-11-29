@@ -9,32 +9,13 @@ import { useAsync } from "../../../hooks/useAsync";
 import { api } from "../../../api";
 import { GoalData } from "../../../api/goals/types";
 
-const dummyGoals: GoalData[] = [
-  {
-    id: 1,
-    title: "TypeScript 마스터하기",
-    deadline: "2024-12-31",
-    description: "제네릭, 타입 추론 등 심화 개념 학습하기",
-    completed: false,
-    tags: ["학습", "개발", "커리어"],
-  },
-  {
-    id: 2,
-    title: "오픈 소스 프로젝트 기여하기",
-    deadline: "2024-08-30",
-    description: "React 생태계의 오픈 소스 프로젝트에 PR 보내기",
-    completed: true,
-    tags: ["개발", "오픈소스"],
-  },
-];
-
 const GoalList = () => {
   const { move } = usePageTransition();
   // const { user, logout } = useAuth();
   const { loading, error, data: goals, execute } = useAsync<GoalData[]>();
 
   useEffect(() => {
-    execute(() => api.goals.getAll().then((res) => dummyGoals));
+    execute(() => api.goals.getAll().then((res) => res.data));
   }, [execute]);
 
   const deleteGoal = useCallback(
@@ -46,10 +27,7 @@ const GoalList = () => {
 
   const toggleGoal = useCallback(
     (id: number) => {
-      // const newGoals = goals.map((goal) =>
-      //   goal.id === id ? { ...goal, completed: !goal.completed } : goal
-      // );
-      // setGoals(newGoals);
+      execute(() => api.goals.toggleComplete(id).then((res) => res.data));
     },
     [goals]
   );

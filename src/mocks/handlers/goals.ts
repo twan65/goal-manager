@@ -2,9 +2,10 @@
 import { http, HttpResponse } from 'msw'
 import { CreateGoalRequest, Goal } from '../types'
 
+let dummyId = 1;
 let goals: Goal[] = [
   {
-    id: 1,
+    id: dummyId,
     title: "TypeScript勉強",
     deadline: "2024-12-31",
     description: "TypeScriptの基礎から中級まで",
@@ -23,12 +24,13 @@ export const goalHandlers = [
   http.post<never, CreateGoalRequest>('/api/goals', async ({ request }) => {
     const newGoal = await request.json()
     const goal: Goal = {
-      id: goals.length + 1,
+      id: dummyId + 1,
       ...newGoal,
       completed: false
     }
     goals.push(goal)
     return HttpResponse.json(goal)
+    return new HttpResponse(null, { status: 200 })
   }),
 
   // 修正
@@ -47,5 +49,13 @@ export const goalHandlers = [
     const id = Number(params.id)
     goals = goals.filter(goal => goal.id !== id)
     return new HttpResponse(null, { status: 200 })
-  })
+  }), 
+
+  http.post<{ id: string }>('/api/goals/:id/toggle', ({ params }) => {
+    const id = Number(params.id)
+    goals = goals.map(goal => 
+      goal.id === id ? { ...goal, completed: !goal.completed } : goal
+    )
+    return HttpResponse.json<Goal[]>(goals);
+  }), 
 ]
