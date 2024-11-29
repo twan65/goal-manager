@@ -41,10 +41,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      // TODO: APIを呼ぶこと
-      //   const { data } = await api.auth.login({ email, password });
-      //   localStorage.setItem("token", data.token);
-      //   setUser(data.user);
+      const { data } = await api.auth.login({ email, password });
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
       setIsAuthenticated(true);
     } catch (error) {
       throw new Error("ログインに失敗しました");

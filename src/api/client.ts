@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 
 const createClient = (): AxiosInstance => {
   const client = axios.create({
-    baseURL: 'http://localhost:5173/', // TODO: 環境変数にすること
+    baseURL: '/api', // TODO: 環境変数にすること
     timeout: 6000, // TODO: タイムアウトの検討
     headers: {
       'Content-Type': 'application/json',
