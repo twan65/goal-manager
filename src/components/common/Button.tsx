@@ -9,14 +9,14 @@ type HeaderProps = {
 
 const Button = ({ onClick, className, children }: HeaderProps) => {
   const protectedClickRef = useRef(false);
-  const handleOnClick = useCallback(async (event: ClickEventType) => {
+  const handleOnClick = async (event: ClickEventType) => {
     if (protectedClickRef.current) {
       return;
     }
     protectedClickRef.current = true;
     await onClick?.(event);
     protectedClickRef.current = false;
-  }, []);
+  };
 
   return (
     <button onClick={handleOnClick} className={className}>
