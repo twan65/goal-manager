@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Login from "./components/login/pages/Login";
 import Layout from "./components/common/Layout";
+import Me from "./components/me/pages/Me";
 
 function App() {
   return (
@@ -15,6 +16,14 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/goals" replace />} />
+            <Route
+              path="/me"
+              element={
+                <ProtectedRoute>
+                  <Me />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/goals"
               element={

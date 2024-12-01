@@ -23,8 +23,9 @@ export const goalHandlers = [
   // 作成
   http.post<never, CreateGoalRequest>('/api/goals', async ({ request }) => {
     const newGoal = await request.json()
+    dummyId++;
     const goal: Goal = {
-      id: dummyId + 1,
+      id: dummyId,
       ...newGoal,
       completed: false
     }
@@ -45,7 +46,7 @@ export const goalHandlers = [
   }),
 
   // 削除
-  http.delete<{ id: string }>('/api/goals/:id', ({ params }) => {
+  http.delete<{ id: string,  }>('/api/goals/:id', ({ params }) => {
     const id = Number(params.id)
     goals = goals.filter(goal => goal.id !== id)
     return new HttpResponse(null, { status: 200 })

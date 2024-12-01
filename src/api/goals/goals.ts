@@ -12,6 +12,7 @@ export const goals = {
   // TODO: ページ単位で取得できるようにする
   getAll: () => 
     client.get<GoalData[]>('/goals'),
+
   create: (params: CreateGoalParams) => 
     client.post<GoalData>('/goals', params),
   
@@ -22,5 +23,5 @@ export const goals = {
     client.delete(`/goals/${id}`),
   
   toggleComplete: (id: number) => 
-    client.patch(`/goals/${id}/toggle`),
+    client.post(`/goals/${id}/toggle`),
 };

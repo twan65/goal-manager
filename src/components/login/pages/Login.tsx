@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       await login(email, password);
-      move("/goals");
+      move("/me");
     } catch (error) {
       setError((error as Error).message);
     }

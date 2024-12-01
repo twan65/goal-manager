@@ -1,5 +1,7 @@
 import { Check, Trash2 } from "lucide-react";
 import Button from "../common/Button";
+import Tag from "../common/Tag";
+import Tags from "../common/Tags";
 
 type GoalProps = {
   id: number;
@@ -8,8 +10,8 @@ type GoalProps = {
   description: string;
   tags: string[];
   completed: boolean;
-  toggleGoal: (id: number) => Promise<void> | void;
-  deleteGoal: (id: number) => Promise<void> | void;
+  toggleGoal?: (id: number) => Promise<void> | void;
+  deleteGoal?: (id: number) => Promise<void> | void;
 };
 
 const Goal = ({
@@ -27,7 +29,7 @@ const Goal = ({
       <div className="flex items-center justify-between p-4 border rounded hover:bg-gray-50">
         <div className="flex items-center gap-4">
           <Button
-            onClick={() => toggleGoal(id)}
+            onClick={() => toggleGoal?.(id)}
             className={`${
               completed ? "text-green-500" : "text-gray-300"
             } hover:text-green-600`}
@@ -42,26 +44,23 @@ const Goal = ({
             >
               {title}
             </p>
-            <p className="text-sm text-gray-500">마감일: {deadline}</p>
+            <p className="text-sm text-gray-500">期限: {deadline}</p>
             {description && (
-              <p className="text-sm text-gray-600 mt-1">{description}</p>
+              <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">
+                {description}
+              </p>
             )}
             {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
+              <Tags>
                 {tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded"
-                  >
-                    {tag}
-                  </span>
+                  <Tag key={index}>{tag}</Tag>
                 ))}
-              </div>
+              </Tags>
             )}
           </div>
         </div>
         <Button
-          onClick={() => deleteGoal(id)}
+          onClick={() => deleteGoal?.(id)}
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 size={20} />

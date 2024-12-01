@@ -7,7 +7,8 @@ import Label from "../../common/Label";
 import Text from "../../common/Text";
 import { useAsync } from "../../../hooks/useAsync";
 import { api } from "../../../api";
-import { CreateGoalParams } from "../../../api/goals/goals";
+import Tags from "../../common/Tags";
+import Tag from "../../common/Tag";
 
 const GoalCreate = () => {
   const { move } = usePageTransition();
@@ -45,9 +46,10 @@ const GoalCreate = () => {
   };
 
   const removeTag = (tagToRemove: string) => {
+    const newTags = newGoal.tags.filter((tag) => tag !== tagToRemove);
     setNewGoal({
       ...newGoal,
-      tags: newGoal.tags.filter((tag) => tag !== tagToRemove),
+      tags: newTags,
     });
   };
 
@@ -109,12 +111,9 @@ const GoalCreate = () => {
               placeholder="タグを入力してEnter"
               disabled={newGoal.tags.length >= 3}
             />
-            <div className="flex flex-wrap gap-2">
+            <Tags>
               {newGoal.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded"
-                >
+                <Tag key={index} className="inline-flex items-center gap-1">
                   {tag}
                   <Button
                     type="button"
@@ -123,9 +122,9 @@ const GoalCreate = () => {
                   >
                     <X size={14} />
                   </Button>
-                </span>
+                </Tag>
               ))}
-            </div>
+            </Tags>
           </div>
         </div>
 
