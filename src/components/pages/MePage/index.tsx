@@ -5,18 +5,17 @@ import { useAsync } from "@/hooks/useAsync";
 import { api } from "@/api";
 import { useAuth } from "@/contexts/AuthContext";
 
+/**
+ * ログインユーザーページ
+ * @returns ログインユーザーページUI
+ */
 export const MePage = () => {
-  const { user, updateUser } = useAuth();
+  const { user } = useAuth();
   const { execute, loading, error } = useAsync();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      try {
-        const userData = await execute(() => api.auth.me());
-        updateUser(userData);
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-      }
+      await execute(() => api.auth.me());
     };
 
     fetchUserInfo();
@@ -29,16 +28,16 @@ export const MePage = () => {
   return (
     <MainLayout>
       <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">내 정보</h2>
+        <h2 className="text-2xl font-bold mb-6">Me</h2>
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-gray-500">이름</label>
+              <label className="text-sm font-medium text-gray-500">氏名</label>
               <p className="mt-1">{user.name}</p>
             </div>
             <div>
               <label className="text-sm font-medium text-gray-500">
-                이메일
+                メールアドレス
               </label>
               <p className="mt-1">{user.email}</p>
             </div>

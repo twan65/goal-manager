@@ -2,6 +2,8 @@ import { Trash2 } from "lucide-react";
 import { IconButton } from "../../atoms/IconButton";
 import { Tag } from "../../atoms/Tag";
 import { Check } from "../../atoms/Check";
+import { Goal } from "@/types";
+import { Tags } from "@/components/atoms/Tags";
 
 type GoalCardProps = {
   goal: Goal;
@@ -19,7 +21,7 @@ export const GoalCard: React.FC<GoalCardProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 flex-1">
           <IconButton
-            icon={<Check size={24} />}
+            icon={<Check size="md" checked={false} />}
             onClick={() => onToggle(goal.id)}
             className={goal.completed ? "text-green-500" : "text-gray-300"}
           />
@@ -31,16 +33,16 @@ export const GoalCard: React.FC<GoalCardProps> = ({
             >
               {goal.title}
             </h3>
-            <p className="text-sm text-gray-500">마감일: {goal.deadline}</p>
+            <p className="text-sm text-gray-500">期限: {goal.deadline}</p>
             <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">
               {goal.description}
             </p>
             {goal.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
+              <Tags className="mt-2">
                 {goal.tags.map((tag, index) => (
                   <Tag key={index}>{tag}</Tag>
                 ))}
-              </div>
+              </Tags>
             )}
           </div>
         </div>

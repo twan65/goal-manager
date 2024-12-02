@@ -7,7 +7,7 @@ import { Button } from "../../atoms/Button";
 import { CreateGoalRequest } from "@/types";
 
 type GoalFormProps = {
-  onSubmit: (data: CreateGoalRequest) => void;
+  onSubmit: (goal: CreateGoalRequest) => void;
   isLoading?: boolean;
   initialData?: Partial<CreateGoalRequest>;
 };
@@ -71,10 +71,10 @@ export const GoalForm: React.FC<GoalFormProps> = ({
 
       <div className="flex justify-end space-x-4">
         <Button variant="secondary" type="button">
-          취소
+          cancel
         </Button>
         <Button type="submit" isLoading={isLoading}>
-          등록
+          submit
         </Button>
       </div>
     </form>

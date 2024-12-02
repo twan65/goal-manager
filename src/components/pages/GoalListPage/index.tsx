@@ -9,30 +9,31 @@ import { useAsync } from "@/hooks/useAsync";
 import { api } from "@/api";
 import { useEffect } from "react";
 
+/**
+ * 目標照会ページ
+ * @returns 目標照会ページUI
+ */
 export const GoalListPage = () => {
   const navigate = useNavigate();
   const { data: goals, loading, error, execute: fetchGoals } = useAsync();
 
+  /**
+   * 初期データ取得
+   */
   useEffect(() => {
     fetchGoals(() => api.goals.getAll().then((res) => res.data));
   }, []);
 
   const handleToggle = async (id: number) => {
-    try {
-      await api.goals.toggleComplete(id);
-      fetchGoals(() => api.goals.getAll());
-    } catch (error) {
-      console.error("Failed to toggle goal:", error);
-    }
+    await api.goals.toggleComplete(id);
+    // TODO: トグルAPIのレスポンスでリスト取得は？
+    fetchGoals(() => api.goals.getAll());
   };
 
   const handleDelete = async (id: number) => {
-    try {
-      await api.goals.delete(id);
-      fetchGoals(() => api.goals.getAll());
-    } catch (error) {
-      console.error("Failed to delete goal:", error);
-    }
+    await api.goals.delete(id);
+    // TODO: 削除APIのレスポンスでリスト取得は？
+    fetchGoals(() => api.goals.getAll());
   };
 
   if (error) {
@@ -47,7 +48,8 @@ export const GoalListPage = () => {
             onClick={() => navigate("/goals/create")}
             className="flex items-center gap-2"
           >
-            <Plus size={18} />새 목표
+            <Plus size={18} />
+            New
           </Button>
         }
       >

@@ -9,6 +9,7 @@ export type TagInputProps = {
 import { useState } from "react";
 import { Tag } from "../../atoms/Tag";
 import { Input } from "../../atoms/Input";
+import { Tags } from "@/components/atoms/Tags";
 
 export const TagInput: React.FC<TagInputProps> = ({
   tags,
@@ -41,17 +42,17 @@ export const TagInput: React.FC<TagInputProps> = ({
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={`태그를 입력하고 Enter를 누르세요 (최대 ${maxTags}개)`}
+        placeholder={`タグを入力してEnterを押してください（最大 ${maxTags}個）`}
         disabled={tags.length >= maxTags}
         error={error}
       />
-      <div className="flex flex-wrap gap-2">
+      <Tags>
         {tags.map((tag, index) => (
           <Tag key={index} onDelete={() => removeTag(tag)}>
             {tag}
           </Tag>
         ))}
-      </div>
+      </Tags>
     </div>
   );
 };

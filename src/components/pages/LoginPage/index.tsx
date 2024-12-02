@@ -1,22 +1,26 @@
-// pages/LoginPage/index.tsx
-import { useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/components/templates/AuthLayout";
 import { LoginForm } from "@/components/organisms/LoginForm";
 import { useAsync } from "@/hooks/useAsync";
 import { useAuth } from "@/contexts/AuthContext";
+import { usePageTransition } from "@/hooks/usePageTransition";
 
+/**
+ * ログインページ
+ * @returns ログインページUI
+ */
 export const LoginPage = () => {
-  const navigate = useNavigate();
+  const { move } = usePageTransition();
   const { login } = useAuth();
   const { execute, error, loading } = useAsync();
 
+  /**
+   * ログインを行う。
+   * @param email メールアドレス
+   * @param password パスワード
+   */
   const handleSubmit = async (email: string, password: string) => {
-    try {
-      await execute(() => login(email, password));
-      navigate("/goals");
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+    await execute(() => login(email, password));
+    move("/me");
   };
 
   return (

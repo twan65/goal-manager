@@ -1,28 +1,31 @@
-// pages/GoalCreatePage/index.tsx
-import { useNavigate } from "react-router-dom";
 import { MainLayout } from "@/components/templates/MainLayout";
 import { GoalFormLayout } from "@/components/templates/GoalFormLayout";
 import { GoalForm } from "@/components/organisms/GoalForm";
 import { useAsync } from "@/hooks/useAsync";
 import { api } from "@/api";
 import { CreateGoalRequest } from "@/types";
+import { usePageTransition } from "@/hooks/usePageTransition";
 
+/**
+ * 目標登録ページ
+ * @returns 目標登録ページUI
+ */
 export const GoalCreatePage = () => {
-  const navigate = useNavigate();
+  const { move } = usePageTransition();
   const { execute, loading } = useAsync();
 
-  const handleSubmit = async (data: CreateGoalRequest) => {
-    try {
-      await execute(() => api.goals.create(data));
-      navigate("/goals");
-    } catch (error) {
-      console.error("Failed to create goal:", error);
-    }
+  /**
+   * 目標登録を行う
+   * @param goal 目標情報
+   */
+  const handleSubmit = async (goal: CreateGoalRequest) => {
+    await execute(() => api.goals.create(goal));
+    move("/goals");
   };
 
   return (
     <MainLayout>
-      <GoalFormLayout onBack={() => navigate("/goals")}>
+      <GoalFormLayout>
         <GoalForm onSubmit={handleSubmit} isLoading={loading} />
       </GoalFormLayout>
     </MainLayout>
