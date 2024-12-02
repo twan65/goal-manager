@@ -1,47 +1,43 @@
-// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
-import GoalList from "./components/goals/pages/GoalList";
-import GoalCreate from "./components/goals/pages/GoalCreate";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import Login from "./components/login/pages/Login";
-import Layout from "./components/common/Layout";
-import Me from "./components/me/pages/Me";
+import { LoginPage } from "./components/pages/LoginPage";
+import { GoalListPage } from "./components/pages/GoalListPage";
+import { MePage } from "./components/pages/MePage";
+import { GoalCreatePage } from "./components/pages/GoalCreatePage";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Navigate to="/goals" replace />} />
-            <Route
-              path="/me"
-              element={
-                <ProtectedRoute>
-                  <Me />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/goals"
-              element={
-                <ProtectedRoute>
-                  <GoalList />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/goals/create"
-              element={
-                <ProtectedRoute>
-                  <GoalCreate />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<Navigate to="/goals" replace />} />
+          <Route
+            path="/me"
+            element={
+              <ProtectedRoute>
+                <MePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/goals"
+            element={
+              <ProtectedRoute>
+                <GoalListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/goals/create"
+            element={
+              <ProtectedRoute>
+                <GoalCreatePage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </Router>
     </AuthProvider>
   );
