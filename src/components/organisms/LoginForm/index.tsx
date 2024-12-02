@@ -32,7 +32,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
       )}
 
-      <FormField label="이메일" required>
+      <FormField label="メールアドレス" required>
         <Input
           type="email"
           value={email}
@@ -41,7 +41,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         />
       </FormField>
 
-      <FormField label="비밀번호" required>
+      <FormField label="パスワード" required>
         <Input
           type="password"
           value={password}
@@ -51,7 +51,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </FormField>
 
       <Button type="submit" isLoading={isLoading} className="w-full">
-        로그인
+        Login
       </Button>
     </form>
   );

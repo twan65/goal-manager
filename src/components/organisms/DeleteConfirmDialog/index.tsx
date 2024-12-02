@@ -13,8 +13,8 @@ export const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
   isOpen,
   onClose,
   onConfirm,
-  title = "삭제하시겠습니까?",
-  description = "이 작업은 취소할 수 없습니다.",
+  title = "削除しますか？",
+  description = "",
 }) => {
   return (
     <Dialog isOpen={isOpen} onClose={onClose} title={title}>
@@ -23,10 +23,10 @@ export const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
       </div>
       <div className="mt-4 flex justify-end space-x-3">
         <Button variant="secondary" onClick={onClose}>
-          취소
+          Cancel
         </Button>
         <Button variant="danger" onClick={onConfirm}>
-          삭제
+          Delete
         </Button>
       </div>
     </Dialog>

@@ -31,8 +31,8 @@ export const GoalList: React.FC<GoalListProps> = ({
   if (goals.length === 0) {
     return (
       <EmptyState
-        title="등록된 목표가 없습니다"
-        description="새로운 목표를 추가해보세요"
+        title="登録の目標がありません"
+        description="新しい目標を追加してみませんか？"
         icon={<ClipboardList size={40} />}
       />
     );
@@ -60,7 +60,7 @@ export const GoalList: React.FC<GoalListProps> = ({
             setDeleteTargetId(null);
           }
         }}
-        description="이 목표를 삭제하시겠습니까?"
+        description="削除すると戻すことはできません。"
       />
     </>
   );

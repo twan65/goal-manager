@@ -27,13 +27,13 @@ export const GoalListPage = () => {
   const handleToggle = async (id: number) => {
     await api.goals.toggleComplete(id);
     // TODO: トグルAPIのレスポンスでリスト取得は？
-    fetchGoals(() => api.goals.getAll());
+    fetchGoals(() => api.goals.getAll().then((res) => res.data));
   };
 
   const handleDelete = async (id: number) => {
     await api.goals.delete(id);
     // TODO: 削除APIのレスポンスでリスト取得は？
-    fetchGoals(() => api.goals.getAll());
+    fetchGoals(() => api.goals.getAll().then((res) => res.data));
   };
 
   if (error) {

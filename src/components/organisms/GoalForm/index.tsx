@@ -5,6 +5,7 @@ import { TextArea } from "../../atoms/TextArea";
 import { TagInput } from "../../molecules/TagInput";
 import { Button } from "../../atoms/Button";
 import { CreateGoalRequest } from "@/types";
+import { usePageTransition } from "@/hooks/usePageTransition";
 
 type GoalFormProps = {
   onSubmit: (goal: CreateGoalRequest) => void;
@@ -17,6 +18,7 @@ export const GoalForm: React.FC<GoalFormProps> = ({
   isLoading = false,
   initialData = {},
 }) => {
+  const { move } = usePageTransition();
   const [formData, setFormData] = useState({
     title: "",
     deadline: "",
@@ -28,6 +30,10 @@ export const GoalForm: React.FC<GoalFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
+  };
+
+  const handleCancelOnClick = () => {
+    move("/goals");
   };
 
   return (
@@ -70,11 +76,11 @@ export const GoalForm: React.FC<GoalFormProps> = ({
       </FormField>
 
       <div className="flex justify-end space-x-4">
-        <Button variant="secondary" type="button">
-          cancel
+        <Button variant="secondary" type="button" onClick={handleCancelOnClick}>
+          Cancel
         </Button>
         <Button type="submit" isLoading={isLoading}>
-          submit
+          Submit
         </Button>
       </div>
     </form>

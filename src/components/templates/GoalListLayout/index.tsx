@@ -6,7 +6,7 @@ type GoalListLayoutProps = {
 
 export const GoalListLayout = ({
   children,
-  title = "목표 일람",
+  title = "Goals",
   action,
 }: GoalListLayoutProps) => {
   return (

@@ -1,7 +1,7 @@
 import { Button } from "@/components/atoms/Button";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePageTransition } from "@/hooks/usePageTransition";
-import { List, LogOut, Plus, User } from "lucide-react";
+import { List, LogOut, User } from "lucide-react";
 
 type MainLayoutProps = {
   children: React.ReactNode;
