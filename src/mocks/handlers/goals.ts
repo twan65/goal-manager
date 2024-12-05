@@ -28,6 +28,10 @@ export const goalHandlers = [
     return HttpResponse.json<Goal[]>(goals);
   }),
 
+  http.get<{ id: string }>("/api/goals/:id", ({params}) => {
+    return HttpResponse.json<Goal[]>(goals);
+  }),
+
   // 作成
   http.post<never, CreateGoalRequest>("/api/goals", async ({ request }) => {
     const newGoal = await request.json();

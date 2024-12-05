@@ -4,7 +4,6 @@ import { MainLayout } from "@/components/templates/MainLayout";
 import { useAsync } from "@/hooks/useAsync";
 import { api } from "@/api";
 import { useAuth } from "@/contexts/AuthContext";
-import { GoalListLayout } from "@/components/templates/GoalListLayout";
 import { Button } from "@/components/atoms/Button";
 import { Plus } from "lucide-react";
 import { GoalList } from "@/components/organisms/GoalList";
@@ -21,17 +20,17 @@ export const MePage = () => {
   const { data: goals, loading, error, execute: fetchGoals } = useAsync();
 
   useEffect(() => {
-    fetchGoals(() => api.goals.getAll().then((res) => res.data));
+    fetchGoals(() => api.goals.getMeAll(user!.id).then((res) => res.data));
   }, []);
 
   const handleToggle = async (id: number) => {
     await api.goals.toggleComplete(id);
-    fetchGoals(() => api.goals.getAll().then((res) => res.data));
+    fetchGoals(() => api.goals.getMeAll(user!.id).then((res) => res.data));
   };
 
   const handleDelete = async (id: number) => {
     await api.goals.delete(id);
-    fetchGoals(() => api.goals.getAll().then((res) => res.data));
+    fetchGoals(() => api.goals.getMeAll(user!.id).then((res) => res.data));
   };
 
   if (loading) return <div>Loading...</div>;
