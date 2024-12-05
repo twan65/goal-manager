@@ -13,6 +13,9 @@ export const goals = {
   getAll: () => 
     client.get<GoalData[]>('/goals'),
 
+  getMeAll: (id: number) => 
+    client.get<GoalData[]>(`/goals/${id}`),
+
   create: (params: CreateGoalParams) => 
     client.post<GoalData>('/goals', params),
   
