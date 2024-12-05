@@ -7,8 +7,8 @@ import { Tags } from "@/components/atoms/Tags";
 
 type GoalCardProps = {
   goal: Goal;
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
+  onToggle?: (id: number) => void;
+  onDelete?: (id: number) => void;
 };
 
 export const GoalCard: React.FC<GoalCardProps> = ({
@@ -20,11 +20,13 @@ export const GoalCard: React.FC<GoalCardProps> = ({
     <div className="p-4 border rounded-lg hover:bg-gray-50">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 flex-1">
-          <IconButton
-            icon={<Check size="md" checked={goal.completed} />}
-            onClick={() => onToggle(goal.id)}
-            className={goal.completed ? "text-green-500" : "text-gray-300"}
-          />
+          {onToggle && (
+            <IconButton
+              icon={<Check size="md" checked={goal.completed} />}
+              onClick={() => onToggle(goal.id)}
+              className={goal.completed ? "text-green-500" : "text-gray-300"}
+            />
+          )}
           <div className="min-w-0">
             <h3
               className={`font-medium ${
@@ -46,12 +48,14 @@ export const GoalCard: React.FC<GoalCardProps> = ({
             )}
           </div>
         </div>
-        <IconButton
-          icon={<Trash2 size={20} />}
-          variant="danger"
-          onClick={() => onDelete(goal.id)}
-          className="ml-4"
-        />
+        {onDelete && (
+          <IconButton
+            icon={<Trash2 size={20} />}
+            variant="danger"
+            onClick={() => onDelete(goal.id)}
+            className="ml-4"
+          />
+        )}
       </div>
     </div>
   );

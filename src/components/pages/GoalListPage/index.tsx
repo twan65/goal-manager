@@ -8,13 +8,14 @@ import { Plus } from "lucide-react";
 import { useAsync } from "@/hooks/useAsync";
 import { api } from "@/api";
 import { useEffect } from "react";
+import { usePageTransition } from "@/hooks/usePageTransition";
 
 /**
  * 目標照会ページ
  * @returns 目標照会ページUI
  */
 export const GoalListPage = () => {
-  const navigate = useNavigate();
+  const { move } = usePageTransition();
   const { data: goals, loading, error, execute: fetchGoals } = useAsync();
 
   /**
@@ -23,18 +24,6 @@ export const GoalListPage = () => {
   useEffect(() => {
     fetchGoals(() => api.goals.getAll().then((res) => res.data));
   }, []);
-
-  const handleToggle = async (id: number) => {
-    await api.goals.toggleComplete(id);
-    // TODO: トグルAPIのレスポンスでリスト取得は？
-    fetchGoals(() => api.goals.getAll().then((res) => res.data));
-  };
-
-  const handleDelete = async (id: number) => {
-    await api.goals.delete(id);
-    // TODO: 削除APIのレスポンスでリスト取得は？
-    fetchGoals(() => api.goals.getAll().then((res) => res.data));
-  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -45,7 +34,7 @@ export const GoalListPage = () => {
       <GoalListLayout
         action={
           <Button
-            onClick={() => navigate("/goals/create")}
+            onClick={() => move("/goals/create")}
             className="flex items-center gap-2"
           >
             <Plus size={18} />
@@ -53,12 +42,7 @@ export const GoalListPage = () => {
           </Button>
         }
       >
-        <GoalList
-          goals={goals || []}
-          onToggle={handleToggle}
-          onDelete={handleDelete}
-          isLoading={loading}
-        />
+        <GoalList goals={goals || []} isLoading={loading} />
       </GoalListLayout>
     </MainLayout>
   );

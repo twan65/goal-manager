@@ -7,8 +7,8 @@ import { EmptyState } from "@/components/molecules/EmptyState";
 
 type GoalListProps = {
   goals: Goal[];
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
+  onToggle?: (id: number) => void;
+  onDelete?: (id: number) => void;
   isLoading?: boolean;
 };
 
@@ -46,22 +46,24 @@ export const GoalList: React.FC<GoalListProps> = ({
             key={goal.id}
             goal={goal}
             onToggle={onToggle}
-            onDelete={() => setDeleteTargetId(goal.id)}
+            onDelete={onDelete ? () => setDeleteTargetId(goal.id) : undefined}
           />
         ))}
       </div>
 
-      <DeleteConfirmDialog
-        isOpen={deleteTargetId !== null}
-        onClose={() => setDeleteTargetId(null)}
-        onConfirm={() => {
-          if (deleteTargetId) {
-            onDelete(deleteTargetId);
-            setDeleteTargetId(null);
-          }
-        }}
-        description="削除すると戻すことはできません。"
-      />
+      {onDelete && (
+        <DeleteConfirmDialog
+          isOpen={deleteTargetId !== null}
+          onClose={() => setDeleteTargetId(null)}
+          onConfirm={() => {
+            if (deleteTargetId) {
+              onDelete(deleteTargetId);
+              setDeleteTargetId(null);
+            }
+          }}
+          description="削除すると戻すことはできません。"
+        />
+      )}
     </>
   );
 };
