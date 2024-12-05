@@ -1,7 +1,9 @@
 import { Button } from "@/components/atoms/Button";
+import { LogoutConfirmDialog } from "@/components/organisms/LogoutConfirmDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePageTransition } from "@/hooks/usePageTransition";
-import { List, LogOut, User } from "lucide-react";
+import { Group, List, LogOut, User } from "lucide-react";
+import { useState } from "react";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -18,11 +20,17 @@ const navItems = [
     label: "Goals",
     icon: <List size={18} />,
   },
+  {
+    path: "",
+    label: "Group",
+    icon: <Group size={18} />,
+  },
 ];
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const { logout, user } = useAuth();
   const { move } = usePageTransition();
+  const [isClickedLogout, setIsClickedLogout] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -36,7 +44,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={logout}
+                onClick={() => setIsClickedLogout(true)}
                 className="flex items-center gap-2"
               >
                 <LogOut size={18} />
@@ -92,6 +100,15 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           </div>
         </div>
       </footer>
+
+      <LogoutConfirmDialog
+        isOpen={isClickedLogout}
+        onClose={() => setIsClickedLogout(false)}
+        onConfirm={() => {
+          setIsClickedLogout(false);
+          logout();
+        }}
+      />
     </div>
   );
 };

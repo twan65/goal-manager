@@ -6,6 +6,7 @@ import { TagInput } from "../../molecules/TagInput";
 import { Button } from "../../atoms/Button";
 import { CreateGoalRequest } from "@/types";
 import { usePageTransition } from "@/hooks/usePageTransition";
+import { CancelConfirmDialog } from "../CancelConfirmDialog";
 
 type GoalFormProps = {
   onSubmit: (goal: CreateGoalRequest) => void;
@@ -27,13 +28,15 @@ export const GoalForm: React.FC<GoalFormProps> = ({
     ...initialData,
   });
 
+  const [inClickedCancel, setIsClickedCancel] = useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
   };
 
   const handleCancelOnClick = () => {
-    move("/goals");
+    setIsClickedCancel(!inClickedCancel);
   };
 
   return (
@@ -83,6 +86,16 @@ export const GoalForm: React.FC<GoalFormProps> = ({
           Submit
         </Button>
       </div>
+
+      <CancelConfirmDialog
+        isOpen={inClickedCancel}
+        onClose={() => setIsClickedCancel(false)}
+        onConfirm={() => {
+          setIsClickedCancel(false);
+          move("/goals");
+        }}
+        description="キャンセルすると戻すことはできません。"
+      />
     </form>
   );
 };

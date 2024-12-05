@@ -21,7 +21,7 @@ export const GoalCard: React.FC<GoalCardProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 flex-1">
           <IconButton
-            icon={<Check size="md" checked={false} />}
+            icon={<Check size="md" checked={goal.completed} />}
             onClick={() => onToggle(goal.id)}
             className={goal.completed ? "text-green-500" : "text-gray-300"}
           />
